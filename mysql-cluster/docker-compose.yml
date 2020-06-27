@@ -6,9 +6,7 @@ services:
       dockerfile: master/Dockerfile
     environment:
       - "MYSQL_ROOT_PASSWORD=123456"
-      - "MYSQL_DATABASE=replicas_db"
-    links:
-      - mysql-slave
+      - "MYSQL_DATABASE=demo_db"
     ports:
       - "33306:3306"
     restart: always
@@ -19,8 +17,10 @@ services:
       dockerfile: slave/Dockerfile
     environment:
       - "MYSQL_ROOT_PASSWORD=123456"
-      - "MYSQL_DATABASE=replicas_db"
+      - "MYSQL_DATABASE=demo_db"
+    links:
+      - mysql-master
     ports:
       - "33307:3306"
     restart: always
-    hostname: mysql-master
+    hostname: mysql-slave
